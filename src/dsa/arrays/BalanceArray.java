@@ -24,63 +24,33 @@ public class BalanceArray {
     }
 
     public static int solve(int[] A){
-        if(A.length == 1) return 1;
-        if(A.length == 2) return (int) Arrays.stream(A).filter(val -> val==0).count();
+        int leftOdd = 0, leftEven = 0, rightOdd = 0, rightEven = 0;
 
-        int[] contiguousSumArr = new int[A.length];
-        contiguousSumArr[0] = A[0];
-        contiguousSumArr[1] = A[1];
-
-        for(int i=2;i<A.length;i++){
-            contiguousSumArr[i] = A[i]+contiguousSumArr[i-2];
-        }
-
-        int maxOI = 0, maxEI = 0;
-        if((contiguousSumArr.length & 1) == 0){
-            maxOI = contiguousSumArr.length - 2;
-            maxEI = contiguousSumArr.length - 1;
-        }else{
-            maxOI = contiguousSumArr.length - 1;
-            maxEI = contiguousSumArr.length - 2;
-        }
-
-        int count=0;
         for(int i=0;i<A.length;i++){
-            if(i == contiguousSumArr.length-1){
-                if(contiguousSumArr[i-1] == contiguousSumArr[i-2]){
-                    System.out.println("Special element found "+ A[i]);
-                    count++;
-                }
+            if((i & 1) == 0){
+                rightEven+=A[i];
                 continue;
             }
-            if(i == contiguousSumArr.length-2){
-                if(contiguousSumArr[i-1] == (contiguousSumArr[i+1] - contiguousSumArr[i-1])){
-                    System.out.println("Special element found "+ A[i]);
-                    count++;
-                }
-                continue;
-            }
+            rightOdd +=A[i];
+        }
 
-            int beforeTwo = i < 2 ? 0 : contiguousSumArr[i-2];
-            int beforeOne = i < 1 ? 0 : contiguousSumArr[i-1];
-            int oddDiff = 0, evenDiff = 0;
-
-            if( (i & 1) == 0){
-                oddDiff =  contiguousSumArr[i+1] - (beforeTwo+A[i+1]);
-                evenDiff = contiguousSumArr[i+2] - (beforeOne+A[i+2]);
+        int count = 0;
+        for(int i=0;i<A.length;i++){
+            if((i & 1) == 0){
+                rightEven-=A[i];
             }else{
-                evenDiff =  contiguousSumArr[i+1] - (beforeTwo+A[i+1]);
-                oddDiff = contiguousSumArr[i+2] - (beforeOne+A[i+2]);
+                rightOdd-=A[i];
             }
-
-            int maxEven = contiguousSumArr[maxEI] - oddDiff;
-            int maxOdd = contiguousSumArr[maxOI] - evenDiff;
-            if(maxEven == maxOdd){
-                System.out.println("Special element found "+ A[i] + " index: "+i);
+            if(leftOdd+rightEven == leftEven+rightOdd){
                 count++;
             }
-        }
 
+            if((i & 1) == 0){
+                leftEven+=A[i];
+            }else{
+                leftOdd+=A[i];
+            }
+        }
         return count;
     }
 }

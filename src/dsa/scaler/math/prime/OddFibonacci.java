@@ -1,4 +1,4 @@
-package dsa.scaler.math;
+package dsa.scaler.math.prime;
 
 public class OddFibonacci {
     public static void main(String[] args) {

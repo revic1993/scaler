@@ -1,4 +1,4 @@
-package dsa.scaler.math;
+package dsa.scaler.math.prime;
 /*
 * src : https://www.scaler.com/academy/mentee-dashboard/class/12422/assignment/problems/4106?navref=cl_tt_lst_sl
 * */

@@ -1,57 +1,59 @@
 package dsa.scaler.recurssion;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Stack;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class AllSubsets {
 
     public static void main(String[] args) {
-        ArrayList<ArrayList<Integer>> testSet = new ArrayList<>();
         ArrayList<Integer> testData = new ArrayList<>();
-        testData.add(1);
-        testData.add(2);
-        testData.add(3);
-        testSet.add(testData);
-        for(ArrayList<Integer> td : testSet){
-            System.out.println(td + " => "+subsets(td));
-        }
+        testData.addAll(Arrays.asList(15, 20, 12, 19, 4));
+        System.out.println(subsets(testData));
     }
 
     public static ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A) {
-        Stack<Stack<Integer>> result = subset(A,0);
-        result.push(new Stack<>());
-        Iterator<Stack<Integer>> resultItr = result.iterator();
-        ArrayList<ArrayList<Integer>> retRes = new ArrayList<>();
-        retRes.add(new ArrayList<>());
-        while(resultItr.hasNext()){
-            Stack<Integer> nextVal = resultItr.next();
-            ArrayList<Integer> resInt = new ArrayList<>(nextVal);
-            retRes.add(resInt);
+        ArrayList<Integer> emptySet = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        result.add(emptySet);
+        if(A.size() == 0){
+            return result;
         }
-        return retRes;
+        Collections.sort(A);
+        result.addAll(subset(A,0));
+        return result;
     }
 
-    public static Stack<Stack<Integer>> subset(ArrayList<Integer> A, int index){
-        Stack<Integer> ele = new Stack<>();
-        Stack<Stack<Integer>> result;
-        ele.push(A.get(index));
+    public static ArrayList<ArrayList<Integer>> subset(ArrayList<Integer> A,int index){
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+
         if(index == A.size()-1){
-            result = new Stack<>();
-            result.push(ele);
+            ArrayList<Integer> currentSet = new ArrayList<>();
+            currentSet.add(A.get(index));
+            result.add(currentSet);
             return result;
         }
 
-        Stack<Stack<Integer>> nextSubset = subset(A,index+1);
-        result = (Stack<Stack<Integer>>) nextSubset.clone();
-        for (Stack<Integer> integerStack : nextSubset) {
-            integerStack.push(A.get(index));
+        ArrayList<ArrayList<Integer>> subsets = getTwoDimArrListCopy(subset(A,index+1));
+        ArrayList<ArrayList<Integer>> subsetClone = getTwoDimArrListCopy(subsets);
+        for(ArrayList<Integer> subset : subsets){
+            subset.add(0,A.get(index));
         }
-        for (Stack<Integer> integers : nextSubset) {
-            result.push(integers);
-        }
-        result.push(ele);
+        ArrayList<Integer> currentSet = new ArrayList<>();
+        currentSet.add(A.get(index));
+        subsets.add(0,currentSet);
+        result.addAll(subsets);
+        result.addAll(subsetClone);
         return result;
     }
+
+    public static ArrayList<ArrayList<Integer>> getTwoDimArrListCopy(ArrayList<ArrayList<Integer>> original){
+        ArrayList<ArrayList<Integer>> copy = new ArrayList<>();
+
+        for (ArrayList<Integer> arr: original){
+            copy.add(new ArrayList<Integer>(arr));
+        }
+
+        return copy;
+    }
+
 }

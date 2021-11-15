@@ -1,5 +1,7 @@
 package dsa.scaler.arrays;
 
+import java.util.ArrayList;
+
 public class PickFromBothSides {
   public static void main(String[] args) {
     int B[] = {
@@ -43,7 +45,8 @@ public class PickFromBothSides {
       end--;
       start--;      
     }
-    
+    ArrayList<Integer> list = new ArrayList<>();
+    list.stream().mapToInt(Integer::intValue).toArray();
     return max;
   }
 }

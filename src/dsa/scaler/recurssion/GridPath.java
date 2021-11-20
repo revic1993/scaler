@@ -1,4 +1,4 @@
-package dsa.scaler.math.recurssion;
+package dsa.scaler.recurssion;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -1,7 +1,5 @@
 package dsa.scaler.math.prime;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 import org.json.JSONObject;
 
 import java.io.IOException;

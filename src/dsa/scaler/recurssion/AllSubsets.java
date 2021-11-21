@@ -7,7 +7,7 @@ public class AllSubsets {
 
     public static void main(String[] args) {
         ArrayList<Integer> testData = new ArrayList<>();
-        testData.addAll(Arrays.asList(15, 20, 12, 19, 4));
+        testData.addAll(Arrays.asList(1,2,2));
         System.out.println(subsets(testData));
     }
 
@@ -19,7 +19,17 @@ public class AllSubsets {
             return result;
         }
         Collections.sort(A);
+        HashSet<ArrayList<Integer>> set = new HashSet<>();
         result.addAll(subset(A,0));
+        Iterator<ArrayList<Integer>> resItr = result.iterator();
+        while(resItr.hasNext()){
+            ArrayList<Integer> val = resItr.next();
+            if(set.contains(val)){
+                resItr.remove();
+            }else{
+                set.add(val);
+            }
+        }
         return result;
     }
 

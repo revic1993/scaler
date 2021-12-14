@@ -29,13 +29,13 @@ public class ReverseTheSentence {
         return String.valueOf(charArr);
     }
 
-    public void reverse(char[] data, int start, int end){
-        while(start<end){
-            char temp = data[end];
-            data[end] = data[start];
-            data[start] = temp;
-            start++;
-            end--;
+        public void reverse(char[] data, int start, int end){
+            while(start<end){
+                char temp = data[end];
+                data[end] = data[start];
+                data[start] = temp;
+                start++;
+                end--;
+            }
         }
-    }
 }

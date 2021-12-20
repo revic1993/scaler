@@ -17,6 +17,10 @@ public class JSONConverter {
        }
    }
 
+    public static <T> void  printSingleArr(ArrayList<T> data){
+       System.out.println(data);
+    }
+
     public static <T> ArrayList<ArrayList<T>> getTwoDimArrListCopy(ArrayList<ArrayList<T>> original){
         ArrayList<ArrayList<T>> copy = new ArrayList<>();
 

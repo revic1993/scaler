@@ -5,8 +5,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class JSONConverter {
+public class Utils {
 
    public static <T> void  print(ArrayList<ArrayList<T>> data){
        ArrayList<ArrayList<T>> clonedData = getTwoDimArrListCopy(data);
@@ -29,6 +30,10 @@ public class JSONConverter {
         }
 
         return copy;
+    }
+
+    public static void printIntArr(int[] data){
+       System.out.println(Arrays.toString(data));
     }
 
 }

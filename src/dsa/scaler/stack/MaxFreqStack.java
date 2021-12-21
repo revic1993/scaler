@@ -1,8 +1,7 @@
 package dsa.scaler.stack;
 
-import dsa.utils.JSONConverter;
+import dsa.utils.Utils;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class MaxFreqStack {
@@ -19,7 +18,7 @@ public class MaxFreqStack {
         data.add(new ArrayList<>(List.of(2,0)));
         data.add(new ArrayList<>(List.of(2,0)));
         MaxFreqStack maxFreqStack = new MaxFreqStack();
-        JSONConverter.printSingleArr(maxFreqStack.solve(data));
+        Utils.printSingleArr(maxFreqStack.solve(data));
     }
     int highestFreq = Integer.MIN_VALUE;
     int currentHighest = Integer.MIN_VALUE;

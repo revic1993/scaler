@@ -1,14 +1,12 @@
 package dsa.scaler.recurssion;
 
-import dsa.utils.JSONConverter;
+import dsa.utils.Utils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.w3c.dom.CDATASection;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class CombinationSum {
@@ -27,7 +25,7 @@ public class CombinationSum {
         testSet.add(td);
         for (TestData testData : testSet) {
             ArrayList<ArrayList<Integer>> result = combinationSum(testData.getA(),testData.getB());
-            JSONConverter.print(result);
+            Utils.print(result);
         }
     }
 
@@ -68,7 +66,7 @@ public class CombinationSum {
             for(ArrayList<Integer> resultData : currentResult){
                 resultData.add(A.get(index));
             }
-            result.addAll(JSONConverter.getTwoDimArrListCopy(currentResult));
+            result.addAll(Utils.getTwoDimArrListCopy(currentResult));
         }
         return result;
     }

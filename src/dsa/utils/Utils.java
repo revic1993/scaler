@@ -33,7 +33,11 @@ public class Utils {
     }
 
     public static void printIntArr(int[] data){
-       System.out.println(Arrays.toString(data));
+        System.out.println(Arrays.toString(data));
+    }
+
+    public static void printIntArr(int[] data,String message){
+       System.out.println(message +" "+Arrays.toString(data));
     }
 
 }

@@ -8,6 +8,7 @@ public class MinMaxSubArrayDiff {
     public static void main(String[] args) {
         MinMaxSubArrayDiff mmsad = new MinMaxSubArrayDiff();
         System.out.println(mmsad.solve(new int[]{4,7,3,8}));
+        System.out.println(mmsad.solve(new int[]{1}));
     }
 
 
@@ -17,19 +18,14 @@ public class MinMaxSubArrayDiff {
         int[] minRightVal = minRight(A);
         int[] maxLeftVal = maxLeft(A);
         int[] maxRightVal = maxRight(A);
-        Utils.printIntArr(minLeftVal,"minLeft:");
-        Utils.printIntArr(minRightVal,"minRight:");
-        Utils.printIntArr(maxLeftVal,"maxLeft:");
-        Utils.printIntArr(maxRightVal,"maxRight:");
         long total = 0;
         for(int i=0;i<A.length;i++){
-            int minLeft = minLeftVal[i] == i ? 1 : i-minLeftVal[i];
-            int minRight = minRightVal[i] == i ? 1 : minRightVal[i]-i;
-            int maxLeft = maxLeftVal[i] == i ? 1 : i-maxLeftVal[i];
-            int maxRight = maxRightVal[i] == i ? 1 : maxRightVal[i]-i;
-            long minContribution = (long) minLeft * minRight;
-            long maxContribution = (long) maxRight * maxLeft;
-            total = (total%MOD + ((maxContribution %MOD * A[i]%MOD)%MOD - (minContribution %MOD*A[i]%MOD)%MOD)%MOD)%MOD;
+            long minContribution = (long) (i - minLeftVal[i]) *(minRightVal[i]-i);
+            long maxContribution = (long) (i - maxLeftVal[i]) *(maxRightVal[i]-i);
+            maxContribution = maxContribution%MOD;
+            minContribution = minContribution%MOD;
+            long currentContribution = (((maxContribution*A[i])%MOD - (minContribution*A[i])%MOD)+MOD)%MOD;
+            total = (total%MOD + currentContribution%MOD)%MOD;
         }
         return (int) (total % MOD);
     }
@@ -42,7 +38,7 @@ public class MinMaxSubArrayDiff {
             while(!minStack.isEmpty() && A[minStack.peek()] > A[i]){
                 minStack.pop();
             }
-            result[i] = minStack.isEmpty() ? 0 : minStack.peek();
+            result[i] = minStack.isEmpty() ? -1 : minStack.peek();
             minStack.push(i);
         }
         return result;
@@ -56,7 +52,7 @@ public class MinMaxSubArrayDiff {
             while(!minStack.isEmpty() && A[minStack.peek()] > A[i]){
                 minStack.pop();
             }
-            result[i] = minStack.isEmpty() ? A.length-1 : minStack.peek();
+            result[i] = minStack.isEmpty() ? A.length : minStack.peek();
             minStack.push(i);
         }
         return result;
@@ -70,7 +66,7 @@ public class MinMaxSubArrayDiff {
             while(!maxStack.isEmpty() && A[maxStack.peek()] < A[i]){
                 maxStack.pop();
             }
-            result[i] = maxStack.isEmpty() ? 0 : maxStack.peek();
+            result[i] = maxStack.isEmpty() ? -1 : maxStack.peek();
             maxStack.push(i);
         }
         return result;
@@ -84,7 +80,7 @@ public class MinMaxSubArrayDiff {
             while(!maxStack.isEmpty() && A[maxStack.peek()] < A[i]){
                 maxStack.pop();
             }
-            result[i] = maxStack.isEmpty() ? A.length-1 : maxStack.peek();
+            result[i] = maxStack.isEmpty() ? A.length : maxStack.peek();
             maxStack.push(i);
         }
         return result;

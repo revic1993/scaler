@@ -40,4 +40,11 @@ public class Utils {
        System.out.println(message +" "+Arrays.toString(data));
     }
 
+    public static void printIntArr(int[][] data,String message){
+       System.out.println(message);
+       for(int[] datum : data){
+        System.out.println(Arrays.toString(datum));
+       }
+    }
+
 }

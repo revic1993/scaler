@@ -1,6 +1,7 @@
 package dsa.scaler.arrays;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /*
@@ -10,62 +11,55 @@ public class FlipBits {
     public static void main(String[] args) {
         String[] testSet = {
 //                "010",
-//                "111",
-//                "01",
-//                "0011101",
-//                "1101010001",
+                "111",
+                "01",
+                "0011101",
+                "1101010001",
                 "0111000100010"
         };
+        FlipBits fb = new FlipBits();
         for(String testData : testSet){
-            System.out.println(testData +" => "+ Arrays.toString(flip(testData)));
+            System.out.println(testData +" => "+ fb.flip(testData));
         }
     }
 
-    public static int[] flip(String A) {
-        int p = 0;
-        int[] pfSumArr = new int[A.length()];
-        int count1 = 0;
-        int[] result = {-1,-1};
-        int i = 0;
-        int maxSum = Integer.MIN_VALUE;
-        int maxInd = 0;
-
-        for(char c : A.toCharArray()){
-            if(c == '1'){
-                count1++;
-                p = Math.max(0,p-1);
+    public ArrayList<Integer> flip(String A) {
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(-1);
+        result.add(-1);
+        int prefix = 0;
+        int max = Integer.MIN_VALUE;
+        ArrayList<Integer> prefixArr = new ArrayList<>();
+        int leastMaxPosition = -1;
+        for(int i=0;i<A.length();i++){
+            char a = A.charAt(i);
+            if(a == '0'){
+                if(prefix < 0){
+                    prefix = 0;
+                }
+                prefixArr.add(++prefix);
+                if(max < prefix){
+                    leastMaxPosition = i;
+                    max = prefix;
+                }
             }else{
-                p +=1;
+                prefix--;
+                prefixArr.add(prefix);
             }
-            pfSumArr[i] = p;
+        }
+        result.set(1,leastMaxPosition+1);
 
-            if(maxSum < p){
-                maxSum = p;
-                maxInd = i;
-            }
-
+        if(max == Integer.MIN_VALUE){
+            return new ArrayList<>();
+        }
+        int i=leastMaxPosition;
+        while(i > 0 && prefixArr.get(i)>=0){
+            i--;
+        }
+        if(prefixArr.get(i) < 0){
             i++;
         }
-
-
-
-        if(count1 == A.length()){
-            return new int[]{};
-        }
-
-        result[1] = maxInd;
-
-        for(int j = 0;j<maxInd;j++){
-            if(pfSumArr[j] > 0){
-                result[0] = j;
-                result[0]++;
-                result[1]++;
-                return result;
-            }
-        }
-
-        result[0] = 1;
-        result[1]++;
+        result.set(0,i+1);
         return result;
     }
 }

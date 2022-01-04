@@ -1,9 +1,7 @@
 package dsa.utils;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import dsa.scaler.LinkedList.structs.ListNode;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,6 +43,15 @@ public class Utils {
        for(int[] datum : data){
         System.out.println(Arrays.toString(datum));
        }
+    }
+
+    public static void printLL(ListNode A){
+       ListNode current = A;
+       while(current != null){
+           System.out.print(current.val+" => ");
+           current = current.next;
+       }
+        System.out.println("null");
     }
 
 }

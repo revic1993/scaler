@@ -54,4 +54,13 @@ public class Utils {
         System.out.println("null");
     }
 
+    public static ListNode populateLL(int[] testData){
+        ListNode A = new ListNode(testData[0]);
+        ListNode current = A;
+        for(int i=1;i<testData.length;i++){
+            current.next = new ListNode(testData[i]);
+            current = current.next;
+        }
+        return A;
+    }
 }

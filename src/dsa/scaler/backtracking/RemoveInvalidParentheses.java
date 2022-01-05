@@ -9,9 +9,13 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class RemoveInvalidParentheses {
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
     public static void main(String[] args) {
         RemoveInvalidParentheses rip = new RemoveInvalidParentheses();
-        System.out.println(rip.solve("))())()))(()((")); //())()))(()
+//        System.out.println(rip.solve("))())()))(()((")); //())()))(()
+        rip.solve("))");
     }
     HashSet<String> result = new HashSet<>();
     public ArrayList<String> solve(String A) {
@@ -34,8 +38,8 @@ public class RemoveInvalidParentheses {
         }
         sb = new StringBuilder(sb.toString().trim());
         if(sb.length() == 0){
-            returnVal.add(" ");
-            return new ArrayList<>();
+//            returnVal.add(" ");
+            return returnVal;
         }
         for(char c : sb.toString().toCharArray()){
             if(c == '('){
@@ -46,16 +50,20 @@ public class RemoveInvalidParentheses {
         }
 
         int maxBraces = Math.min(left,right);
-        System.out.format("%10s%10s%10s%10s%10s","string","left","right","index","maxBraces");
+//        System.out.format("%10s%10s%10s%10s%10s","string","left","right","index","maxBraces");
         System.out.println();
         while(maxBraces > 0 && result.isEmpty()){
-            removeInvalid(sb,left,right,0,maxBraces-1);
+            removeInvalid(sb,left,right,0,maxBraces);
             maxBraces--;
         }
 
         if(result.isEmpty()){
-            returnVal.add(sb.toString().replaceAll("\\(", "")
-                                    .replace(")", ""));
+            String result = sb.toString().replaceAll("\\(", "")
+                                    .replace(")", "");
+            if(result.isEmpty()){
+                result = " ";
+            }
+            returnVal.add(result);
             return returnVal;
         }
 
@@ -64,39 +72,30 @@ public class RemoveInvalidParentheses {
     }
 
     public void removeInvalid(StringBuilder sb, int left, int right,int index,int maxBraces){
-        System.out.format("%10s%10s%10s%10s%10s",sb.toString(),left,right,index,maxBraces);
-        System.out.println();
-        if(sb.charAt(0) == ')' || sb.charAt(sb.length()-1)=='('){
+        if(left < maxBraces || right < maxBraces){
             return;
         }
+
+//        System.out.format("%10s%10s%10s%10s%10s",sb.toString(),left,right,index,maxBraces);
         if(left == right && left == maxBraces){
             boolean isCurrentValid = isValidParentheses(sb);
             System.out.println(sb.toString()+" is "+(isCurrentValid ? "valid" : "invalid")+" for max braces "+maxBraces);
             if(isCurrentValid){
-
                 result.add(sb.toString());
             }
             return;
         }
-        char charToRemove;
-        int removeFromLeft;
-        int removeFromRight;
-        if(left > maxBraces || right < left){
-            removeFromRight = 0;
-            removeFromLeft = 1;
-            charToRemove = '(';
-        }else {
-            removeFromRight = 1;
-            removeFromLeft = 0;
-            charToRemove = ')';
-        }
+
         for(int i = index;i<sb.length();i++){
-            if(sb.charAt(i) != charToRemove){
+            char currentChar = sb.charAt(i);
+            if(currentChar != '(' && currentChar!=')'){
                 continue;
             }
+            int removeFromLeft = currentChar == '(' ? 1 : 0;
+            int removeFromRight = currentChar == ')' ? 1 : 0;
             sb.deleteCharAt(i);
             removeInvalid(sb,left-removeFromLeft,right-removeFromRight,i,maxBraces);
-            sb.insert(i,charToRemove);
+            sb.insert(i,currentChar);
         }
     }
 

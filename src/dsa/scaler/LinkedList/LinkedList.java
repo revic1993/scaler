@@ -1,54 +1,93 @@
 package dsa.scaler.LinkedList;
 
+import dsa.scaler.LinkedList.structs.ListNode;
+import dsa.utils.Utils;
+
 public class LinkedList {
-    static Node head;
+    static ListNode head;
 
     public static void main(String[] args) {
-        insert_node(1,24);
-        insert_node(2,23);
-        insert_node(3,22);
-        insert_node(4,21);
-        insert_node(5,20);
+       int[] insertArr = {1,2,3,4,5,6,7};
+       for(int i=1;i<=insertArr.length;i++){
+           insert_node(i,insertArr[i-1]);
+       }
+       print_ll();
+       delete_node(3);
+       print_ll();
+       delete_node(6);
+       print_ll();
+       delete_node(1);
+       print_ll();
+       insert_node(1,15);
+       print_ll();
+       insert_node(6,20);
         print_ll();
-        System.out.println();
-        delete_node(3);
-        System.out.println("After deleting index at 3");
-        print_ll();
-        delete_node(1);
-        System.out.println("After deleting index at 1");
-        print_ll();
-        delete_node(3);
-        System.out.println("After deleting index at 3");
-        print_ll();
-        insert_node(3,24);
-        System.out.println("After inserting index at 3");
-        print_ll();
+//       delete_node(25);
+//       print_ll();
+//       delete_node(53);
+//       print_ll();
+//       delete_node(12);
+//       delete_node(53);
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        delete_node(39);
+//        delete_node(42);
+//        print_ll();
+//        delete_node(47);
+//        delete_node(45);
+//        delete_node(35);
+//        print_ll();
+//        delete_node(13);
+//        print_ll();
+//        delete_node(18);
+//        delete_node(59);
+//        delete_node(47);
+//        delete_node(43);
+//        delete_node(38);
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        print_ll();
+//        delete_node(8);
+//        print_ll();
+//        delete_node(8);
+//        print_ll();
+//        delete_node(39);
+//        delete_node(60);
+//        delete_node(16);
+//        print_ll();
+//        print_ll();
     }
     public static void insert_node(int position, int value) {
-        if(head == null && position != 1){
+        if(head == null){
+            head = new ListNode(value);
             return;
         }
 
-        if(head == null){
-            head = new Node(value);
+        if(position == 1){
+            ListNode newNode = new ListNode(value);
+            newNode.next = head;
+            head = newNode;
             return;
         }
-        Node current = head;
+
+        ListNode current = head;
         for(int i=1;i<position-1;i++){
             if(current == null){
                 return;
             }
             current = current.next;
         }
-        current.next = new Node(value);
+        current.next = new ListNode(value);
     }
 
     public static void delete_node(int position) {
         if(head == null){
-            return;
-        }
-
-        if(position == 1 && head.next == null ){
             return;
         }
 
@@ -57,8 +96,8 @@ public class LinkedList {
             return;
         }
 
-        Node current = head;
-        Node prev = null;
+        ListNode current = head;
+        ListNode prev = null;
         for(int i=1;i<position;i++){
             if(current.next == null){
                 return;
@@ -73,18 +112,12 @@ public class LinkedList {
     }
 
     public static void print_ll() {
-        Node current = head;
+        ListNode current = head;
+        System.out.println();
         while(current != null){
-            System.out.print(""+current.data+" ");
+            System.out.print(""+current.val+" ");
             current = current.next;
         }
     }
 
-    static class Node{
-        int data;
-        Node next;
-        Node(int data){
-            this.data = data;
-        }
-    }
 }

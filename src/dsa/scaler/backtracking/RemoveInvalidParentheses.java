@@ -16,7 +16,7 @@ public class RemoveInvalidParentheses {
         RemoveInvalidParentheses rip = new RemoveInvalidParentheses();
 //        System.out.println(rip.solve("))())()))(()((")); //())()))(()
         rip.solve("))");
-    }
+}
     HashSet<String> result = new HashSet<>();
     public ArrayList<String> solve(String A) {
         int left = 0;

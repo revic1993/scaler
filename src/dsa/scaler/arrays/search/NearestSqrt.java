@@ -1,4 +1,4 @@
-package dsa.scaler.arrays.search.binarySearch;
+package dsa.scaler.arrays.search;
 
 public class NearestSqrt {
 

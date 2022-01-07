@@ -1,4 +1,4 @@
-package dsa.scaler.arrays.search.binarySearch;
+package dsa.scaler.arrays.search;
 
 import java.util.ArrayList;
 import java.util.Arrays;

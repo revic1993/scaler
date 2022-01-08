@@ -40,6 +40,8 @@ public class IsPalindrome {
         return head;
     }
 
+
+
     public ListNode reverseList(ListNode B){
         ListNode current = B;
         ListNode prev = null;

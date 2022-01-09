@@ -1,67 +1,136 @@
 package dsa.scaler.hashmap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class PointsOnSameLine {
     public static void main(String[] args) {
         PointsOnSameLine posl = new PointsOnSameLine();
-        System.out.println(posl.solve(new ArrayList<>(List.of(2, 1, -7, 4, 1, -2, -7, 5)),new ArrayList<>(List.of(-6, -7, 3, -10, 7, -10, 1, 2))));
+        System.out.println(posl.solve(new ArrayList<>(List.of(6, -5, 3, -6, 3, -9, -8, -7)),new ArrayList<>(List.of(5, 0, -8, 1, -1, 6, 3, -3))));
     }
     public int solve(ArrayList<Integer> A, ArrayList<Integer> B) {
-        HashMap<Integer,Integer> horizontal = new HashMap<>();
-        HashMap<Integer,Integer> vertical = new HashMap<>();
-        HashSet<String> coordinates = new HashSet<>();
+        int max = Integer.MIN_VALUE;
 
-        int maxOnSameLine = Integer.MIN_VALUE;
         for(int i=0;i<A.size();i++){
-            int x = A.get(i);
-            int y = B.get(i);
-            coordinates.add(x+"_"+y);
+            int fx = A.get(i);
+            int fy = B.get(i);
+            int horizontalMax = 1;
+            int verticalMax = 1;
+            FreqMap<String> slopeMap = new FreqMap<>();
+            int dup = 1;
+            for(int j=i+1;j<A.size();j++){
+                int sx = A.get(j);
+                int sy = B.get(j);
+                if(sx == fx && sy == fy){
+                    dup++;
+                    continue;
+                }
 
-            if(!horizontal.containsKey(y)){
-                horizontal.put(y,0);
+                if(sx == fx || sy == fy){
+                    horizontalMax += sx == fx ? 1 : 0;
+                    verticalMax += sy == fy ? 1 : 0;
+                    continue;
+                }
+
+                int dx = fx-sx;
+                int dy = fy-sy;
+                String neg = dx >= 0 && dy >= 0 || dx <= 0 && dy <=0 ? "" : "-";
+                int gcd = findGCD(Math.abs(dx),Math.abs(dy));
+                slopeMap.add(neg+(Math.abs(dx)/gcd)+"_"+(Math.abs(dy)/gcd));
             }
-
-            if(!vertical.containsKey(x)){
-                vertical.put(x,0);
-            }
-
-            horizontal.put(y,horizontal.get(y)+1);
-            vertical.put(x,vertical.get(x)+1);
-            maxOnSameLine = Math.max(maxOnSameLine,horizontal.get(y));
-            maxOnSameLine = Math.max(maxOnSameLine,vertical.get(x));
-        }
-        int cross = 1;
-        for(int i=0;i<A.size();i++){
-            int x = A.get(i);
-            int y = B.get(i);
-            String key = x+"_"+y;
-            if(!coordinates.contains(key)){
-                continue;
-            }
-            int j=1;
-            String updatedKey = (x+j)+"_"+(y+j);
-            while(coordinates.contains(updatedKey)){
-                coordinates.remove(updatedKey);
-                cross++;
-                j++;
-                updatedKey = (x+j)+"_"+(y+j);
-            }
-
-            j = -1;
-
-            updatedKey = (x+j)+"_"+(y+j);
-            while(coordinates.contains(updatedKey)){
-                coordinates.remove(updatedKey);
-                cross++;
-                j--;
-                updatedKey = (x+j)+"_"+(y+j);
+            max = Math.max(dup,max);
+            max = Math.max(max,horizontalMax);
+            max = Math.max(max,verticalMax);
+            for(String key : slopeMap.keys()){
+                max = Math.max(max,slopeMap.getFreq(key)+dup);
             }
         }
-        maxOnSameLine = Math.max(maxOnSameLine,cross);
-        return maxOnSameLine;
+
+        return max;
+    }
+
+    int findGCD(int A, int B){
+        if(A==0 || B==0){
+            return A == 0 ? B : A;
+        }
+
+        if(A==1 || B==1){
+            return 1;
+        }
+
+        if(A > B){
+            int temp = A;
+            A = B;
+            B = temp;
+        }
+
+        while(A > 0){
+            int t = B%A;
+            B = A;
+            A = t;
+        }
+
+        return A == 0 ? B : A;
+    }
+
+    class FreqMap<T>{
+        HashMap<T,Integer> freqMap;
+
+        public FreqMap(){
+            this.freqMap = new HashMap<>();
+        }
+
+        public HashMap<T,Integer> getMap(){
+            return this.freqMap;
+        }
+
+        public void addAll(List<T> A){
+            for(T a : A){
+                this.add(a);
+            }
+        }
+
+        public void add(T key){
+            if(freqMap.containsKey(key)){
+                freqMap.put(key,freqMap.get(key)+1);
+                return;
+            }
+            freqMap.put(key,1);
+        }
+
+        public void remove(T key,int deleteVal){
+            if(!freqMap.containsKey(key)){
+                return;
+            }
+
+            if(freqMap.get(key)-1 == deleteVal){
+                freqMap.remove(key);
+                return;
+            }
+            freqMap.put(key, freqMap.get(key)-1);
+        }
+
+        public int getFreq(T key){
+            if(!freqMap.containsKey(key)){
+                return -1;
+            }
+            return freqMap.get(key);
+        }
+
+        public Set<T> keys(){
+            return freqMap.keySet();
+        }
+
+        public void remove(T key){
+            if(!freqMap.containsKey(key)){
+                return;
+            }
+
+            freqMap.put(key, freqMap.get(key)-1);
+        }
+
+        @Override
+        public String toString() {
+            return freqMap.toString();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package dsa.scaler.arrays.search;
+package dsa.scaler.search;
 
 public class MaxStaircaseHeight {
     public static void main(String[] args) {

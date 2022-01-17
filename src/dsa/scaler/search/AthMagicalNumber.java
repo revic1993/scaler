@@ -1,4 +1,4 @@
-package dsa.scaler.arrays.search;
+package dsa.scaler.search;
 
 public class AthMagicalNumber {
     public static void main(String[] args) {

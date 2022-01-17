@@ -1,4 +1,4 @@
-package dsa.scaler.arrays.search;
+package dsa.scaler.search;
 
 import java.util.Arrays;
 

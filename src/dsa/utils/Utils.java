@@ -1,9 +1,13 @@
 package dsa.utils;
 
 import dsa.scaler.LinkedList.structs.ListNode;
+import dsa.scaler.trees.structs.TreeLinkNode;
+import dsa.scaler.trees.structs.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Utils {
 
@@ -62,5 +66,33 @@ public class Utils {
             current = current.next;
         }
         return A;
+    }
+
+    public static TreeLinkNode generateBinaryTree(ArrayList<Integer> A) {
+        if(A.size() == 0){
+            return null;
+        }
+
+        int nextPointer = 0;
+        Queue<TreeLinkNode> nodeQueue = new LinkedList<>();
+        TreeLinkNode root = new TreeLinkNode(A.get(0));
+        nodeQueue.add(root);
+
+
+        while(nextPointer < A.size() && !nodeQueue.isEmpty()){
+            TreeLinkNode current = nodeQueue.remove();
+            if(current == null){
+                continue;
+            }
+            nextPointer++;
+            TreeLinkNode leftNode = nextPointer < A.size() && A.get(nextPointer) != -1 ?  new TreeLinkNode(A.get(nextPointer)) : null;
+            nextPointer++;
+            TreeLinkNode rightNode = nextPointer < A.size() && A.get(nextPointer) != -1 ?  new TreeLinkNode(A.get(nextPointer)) : null;
+            current.left = leftNode;
+            current.right = rightNode;
+            nodeQueue.add(leftNode);
+            nodeQueue.add(rightNode);
+        }
+        return root;
     }
 }

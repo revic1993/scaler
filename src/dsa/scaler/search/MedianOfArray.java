@@ -30,11 +30,13 @@ public class MedianOfArray {
         while(fLow <= fHigh){
             int mid = (fHigh + fLow) >> 1;
             if(mid >= lpSize){
+                // we have reached a point where number of elements from first array is too high
                 fHigh = mid-1;
                 continue;
             }
             int sHigh = lpSize - (mid + 1);
             if(sHigh > b.size()){
+                // we have reached a point where number of elements from first array is too low
                 fLow = mid+1;
                 continue;
             }

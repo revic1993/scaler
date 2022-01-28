@@ -1,26 +1,89 @@
 package dsa.scaler.arrays.sort;
 
+import dsa.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReversePairs2 {
-
-
     int totalInversions;
 
     public static void main(String[] args) {
         ReversePairs2 rp = new ReversePairs2();
-        System.out.println(rp.solve(new ArrayList<>(List.of(1,3,2,3,1))));
+        ArrayList<Integer> data = new ArrayList<>(List.of(2000000000, 2000000000, -2000000000));
+        System.out.println(rp.solve(data));
+        Utils.printSingleArr(data);
     }
 
     public int solve(ArrayList<Integer> A) {
-        int mid = findMid(0,A.size()-1);
-        sort(A,0,mid);
-        sort(A,mid+1,A.size()-1);
-        merge(A,0,mid,A.size()-1);
+        sort(A,0,A.size());
         return totalInversions;
     }
 
+    public void sort(ArrayList<Integer> A, int start, int end){
+        if(start+1 == end){
+            return;
+        }
+
+        int mid = (start+end) >> 1;
+        sort(A,start,mid);
+        sort(A,mid,end);
+        merge(A,start,mid,end);
+    }
+
+    public void merge(ArrayList<Integer> A, int start, int mid, int end){
+        ArrayList<Integer> left = new ArrayList<>();
+        ArrayList<Integer> right = new ArrayList<>();
+
+        for(int i=start;i<mid;i++){
+            left.add(A.get(i));
+        }
+
+        for(int j=mid;j<end;j++){
+            right.add(A.get(j));
+        }
+
+        int lp = 0;
+        int rp = 0;
+
+        for(int k=start;k<end;k++){
+            if(lp >= left.size() || rp >= right.size()){
+                break;
+            }
+
+            if(((left.get(lp)+1) >> 1) > right.get(rp)){
+                rp++;
+                totalInversions += (left.size() - lp);
+            }else{
+                lp++;
+            }
+        }
+
+        lp = 0;
+        rp=0;
+        for(int k=start;k<end;k++){
+            if(lp >= left.size()){
+                A.set(k,right.get(rp++));
+                continue;
+            }
+
+            if(rp >= right.size()){
+                A.set(k,left.get(lp++));
+                continue;
+            }
+
+            if( left.get(lp) > right.get(rp)){
+                A.set(k,right.get(rp++));
+            }else{
+                A.set(k,left.get(lp++));
+            }
+        }
+
+    }
+
+}
+/*
+*
     public void sort(ArrayList<Integer> A,int start,int end){
         if(start == end){
             return;
@@ -50,8 +113,18 @@ public class ReversePairs2 {
 
         while(i < left.size() && j < right.size()){
             if(left.get(i) > 2*right.get(j)){
-                A.set(k++,right.get(j++));
                 totalInversions+= (left.size()-i);
+                i++;
+            }else{
+                j++;
+            }
+        }
+
+        i=0;j=0;
+
+        while(i < left.size() && j < right.size()){
+            if(left.get(i) > right.get(j)){
+                A.set(k++,right.get(j++));
             }else{
                 A.set(k++,left.get(i++));
             }
@@ -73,5 +146,4 @@ public class ReversePairs2 {
     public int findMid(int left,int right){
         int rMinusL = (right-left)>>1;
         return left+rMinusL;
-    }
-}
+    }*/

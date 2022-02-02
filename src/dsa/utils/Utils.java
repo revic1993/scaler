@@ -4,10 +4,7 @@ import dsa.scaler.LinkedList.structs.ListNode;
 import dsa.scaler.trees.structs.TreeLinkNode;
 import dsa.scaler.trees.structs.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Utils {
 
@@ -94,5 +91,10 @@ public class Utils {
             nodeQueue.add(rightNode);
         }
         return root;
+    }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> generateList(T...args){
+       return new ArrayList<>(List.of(args));
     }
 }

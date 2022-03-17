@@ -9,7 +9,6 @@ public class FlipArray {
 //        System.out.println(fa.solve(new int[]{ 11, 10, 8, 6, 8, 11, 1, 10, 2, 3, 8, 3, 8, 12, 11, 1, 7, 5, 5, 12, 9, 4, 10, 3, 3, 3, 8, 8, 8, 6, 7, 7, 7, 6, 4, 2, 5, 8, 11, 10, 10, 10, 12, 9, 2, 3, 9, 12, 7, 6, 11, 8, 9, 9, 10, 3, 3, 5, 2, 10, 10, 9, 4, 9, 6, 11, 10, 2, 6, 1, 4, 7, 10, 3, 4, 3, 9, 4, 3, 8, 1, 1, 3}));
         System.out.println(fa.solve(new int[]{15,10,6,5,2}));
     }
-    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
 
     public int solve(final int[] A) {
 
@@ -52,14 +51,6 @@ public class FlipArray {
         Pair(){
             this.sum = 0;
             this.totalInverted = 0;
-        }
-
-        @Override
-        public String toString() {
-            return "{" +
-                    "sum :" + sum +
-                    ", totalInverted :" + totalInverted +
-                    '}';
         }
     }
 

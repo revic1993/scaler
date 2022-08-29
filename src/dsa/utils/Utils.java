@@ -11,11 +11,23 @@ public class Utils {
    public static <T> void  print(ArrayList<ArrayList<T>> data){
        ArrayList<ArrayList<T>> clonedData = getTwoDimArrListCopy(data);
        for(ArrayList<T> datum : clonedData){
+           System.out.println("================================");
            System.out.println(" { ");
            System.out.println(datum);
            System.out.println(" } ");
+           System.out.println("================================");
        }
    }
+
+    public static <T> void  print(List<List<T>> data){
+        for(List<T> datum : data){
+            System.out.println("================================");
+            System.out.println(" { ");
+            System.out.println(datum);
+            System.out.println(" } ");
+            System.out.println("================================");
+        }
+    }
 
     public static <T> void  printSingleArr(ArrayList<T> data){
        System.out.println(data);
